@@ -1,0 +1,100 @@
+.main {
+    background-color: #f1f1f1;
+    padding: 40px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.request-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 20px;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* カード形式 */
+.detail-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    padding: 25px 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-row.no-border {
+    border-bottom: none;
+}
+
+.detail-label {
+    width: 200px;
+    color: #888;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+/* テキスト表示スタイル */
+.detail-value.text-only {
+    flex: 1;
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.date-text {
+    margin-right: 10px;
+}
+
+.separator {
+    color: #000;
+    font-weight: normal;
+}
+
+/* 備考テキスト */
+.remarks-text {
+    white-space: pre-wrap;
+    word-break: break-word;
+}
+
+/* 承認ボタン */
+.form-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.approve-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 60px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.approve-btn:hover:not(:disabled) {
+    opacity: 0.8;
+}
+
+/* 承認済みボタン（無効化） */
+.approve-btn:disabled {
+    background-color: #ccc;
+    color: #666;
+    cursor: not-allowed;
+    opacity: 0.6;
+}

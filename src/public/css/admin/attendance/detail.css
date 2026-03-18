@@ -1,0 +1,110 @@
+.main {
+    background-color: #f1f1f1;
+    padding: 40px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 20px;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* カード形式のフォームエリア */
+.detail-card {
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    padding: 20px 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-row.no-border {
+    border-bottom: none;
+}
+
+.detail-label {
+    width: 250px;
+    color: #888;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.detail-value {
+    flex: 1;
+    display: flex;
+    gap: 40px;
+    align-items: center;
+}
+
+.user-name,
+.date-text {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* 時間入力枠の再現 */
+.time-input {
+    width: 100px;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    font-family: inherit;
+}
+
+.inline-group {
+    gap: 15px !important;
+}
+
+.separator {
+    font-weight: bold;
+}
+
+/* 備考欄 */
+.remarks-area {
+    width: 100%;
+    min-height: 80px;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+    padding: 10px;
+    resize: none;
+}
+
+/* 修正ボタンの右寄せ */
+.form-action {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 30px;
+}
+
+.update-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 12px 60px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.update-btn:hover {
+    opacity: 0.8;
+}

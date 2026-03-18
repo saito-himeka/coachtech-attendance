@@ -1,0 +1,61 @@
+.main {
+    background-color: #f1f1f1;
+    padding: 40px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.staff-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 20px;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* テーブルスタイル */
+.staff-table {
+    width: 100%;
+    border-collapse: collapse;
+    background-color: #fff;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.staff-table th,
+.staff-table td {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+}
+
+.staff-table th {
+    color: #888;
+    font-size: 13px;
+    font-weight: normal;
+}
+
+.staff-table td {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+/* メールアドレス列は少しフォントを調整 */
+.staff-table td:nth-child(2) {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.detail-link {
+    color: #000;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.detail-link:hover {
+    text-decoration: underline;
+}

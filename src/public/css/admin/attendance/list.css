@@ -1,0 +1,160 @@
+.main {
+    background-color: #f1f1f1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: calc(100vh - 70px);
+}
+
+.punch-container {
+    text-align: center;
+    width: 100%;
+    max-width: 500px;
+}
+
+/* アラートメッセージ */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+    font-size: 16px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.alert-error {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+/* ステータスバッジ */
+.status-badge {
+    margin-bottom: 20px;
+}
+
+.badge {
+    display: inline-block;
+    padding: 4px 16px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+.badge-not-working {
+    background-color: #ccc;
+    color: #666;
+}
+
+.badge-working {
+    background-color: #d4edda;
+    color: #155724;
+}
+
+.badge-on-break {
+    background-color: #fff3cd;
+    color: #856404;
+}
+
+.badge-clocked-out {
+    background-color: #d1ecf1;
+    color: #0c5460;
+}
+
+/* 日付表示 */
+.current-date {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+    color: #333;
+}
+
+/* 時刻表示（特大） */
+.current-time {
+    font-size: 80px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    letter-spacing: 4px;
+    color: #000;
+}
+
+/* 打刻フォーム */
+.punch-form {
+    display: inline-block;
+    margin: 0;
+}
+
+/* ボタングループ（横並び） */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* 打刻ボタン（基本スタイル） */
+.punch-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 15px 80px;
+    font-size: 18px;
+    font-weight: bold;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.punch-btn:hover {
+    opacity: 0.8;
+}
+
+/* 休憩入ボタン（白背景・黒文字・黒枠） */
+.punch-btn-break {
+    background-color: #fff;
+    color: #000;
+    border: 2px solid #000;
+}
+
+.punch-btn-break:hover {
+    background-color: #f8f8f8;
+}
+
+/* 退勤ボタン（黒背景・白文字） */
+.punch-btn-out {
+    background-color: #000;
+    color: #fff;
+}
+
+/* 退勤済みメッセージ */
+.message-clocked-out {
+    font-size: 18px;
+    color: #0c5460;
+    font-weight: bold;
+    margin-top: 20px;
+}
+
+/* レスポンシブ対応 */
+@media (max-width: 768px) {
+    .current-date {
+        font-size: 18px;
+    }
+
+    .current-time {
+        font-size: 60px;
+    }
+
+    .punch-btn {
+        padding: 12px 60px;
+        font-size: 16px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+}

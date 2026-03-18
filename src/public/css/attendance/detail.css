@@ -1,0 +1,189 @@
+.main {
+    background-color: #f1f1f1;
+    padding: 40px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.attendance-detail-container {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+.page-title {
+    font-size: 20px;
+    border-left: 5px solid #000;
+    padding-left: 15px;
+    margin-bottom: 30px;
+    font-weight: bold;
+}
+
+/* 成功メッセージ */
+.alert {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 8px;
+}
+
+.alert-success {
+    background-color: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.detail-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+}
+
+.detail-row {
+    display: flex;
+    align-items: center;
+    padding: 25px 40px;
+    border-bottom: 1px solid #eee;
+}
+
+.detail-row.no-border {
+    border-bottom: none;
+    align-items: flex-start;
+}
+
+.detail-label {
+    width: 200px;
+    color: #888;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.detail-value-wrapper {
+    flex: 1;
+}
+
+.detail-value {
+    display: flex;
+    align-items: center;
+    gap: 40px;
+}
+
+.detail-value.readonly {
+    font-weight: bold;
+    font-size: 16px;
+    display: flex;
+    gap: 115px;
+    align-items: center;
+}
+
+/* テキスト表示のみ（申請中） */
+.detail-value.text-only {
+    font-size: 16px;
+    font-weight: bold;
+    display: flex;
+    gap: 70px;
+    align-items: center;
+    padding: 0 0 0 30px;
+}
+
+.time-display {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.remarks-text {
+    font-size: 15px;
+    font-weight: normal;
+    white-space: pre-wrap;
+    word-break: break-word;
+    line-height: 1.6;
+}
+
+.date-name {
+    padding: 0 0 0 18px;
+}
+
+.date-year {
+    width: 100px;
+    text-align: left;
+    padding: 0 0 0 25px;
+}
+
+/* 入力フィールドのスタイル */
+.time-input {
+    width: 100px;
+    padding: 6px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    font-size: 15px;
+    font-weight: bold;
+    background-color: #fff;
+}
+
+.time-input:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.time-input.is-invalid,
+.reason-textarea.is-invalid {
+    border-color: #e74c3c;
+    background-color: #fff5f5;
+}
+
+.reason-textarea {
+    width: 100%;
+    min-height: 100px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 15px;
+    resize: vertical;
+}
+
+.reason-textarea:focus {
+    outline: none;
+    border-color: #666;
+}
+
+.separator {
+    font-weight: bold;
+}
+
+.error-message {
+    color: #e74c3c;
+    font-size: 13px;
+    margin-top: 5px;
+    margin-bottom: 0;
+}
+
+/* フォームアクション */
+.form-action {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.update-btn {
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 10px 50px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.update-btn:hover {
+    opacity: 0.8;
+}
+
+/* 申請中メッセージ */
+.pending-message {
+    font-size: 16px;
+    font-weight: bold;
+    color: #e74c3c;
+    padding: 10px 30px;
+    border-radius: 4px;
+}

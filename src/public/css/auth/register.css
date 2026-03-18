@@ -1,0 +1,85 @@
+/* 背景色を白（または非常に薄いグレー）に設定 */
+.main {
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 60px 20px;
+    min-height: calc(100vh - 70px);
+}
+
+.register-container {
+    width: 100%;
+    max-width: 400px;
+}
+
+.form-title {
+    text-align: center;
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 40px;
+}
+
+.register-form {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.form-label {
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.form-input {
+    padding: 10px;
+    border: 1px solid #000;
+    /* 黒い枠線 */
+    border-radius: 4px;
+    font-size: 16px;
+    width: 100%;
+}
+
+/* 登録ボタン */
+.form-action {
+    margin-top: 15px;
+}
+
+.submit-btn {
+    width: 100%;
+    background-color: #000;
+    color: #fff;
+    border: none;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.submit-btn:hover {
+    opacity: 0.8;
+}
+
+/* フッターリンク */
+.form-footer {
+    text-align: center;
+    margin-top: 10px;
+}
+
+.login-link {
+    color: #3498db;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.login-link:hover {
+    text-decoration: underline;
+}
