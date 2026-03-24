@@ -6,29 +6,18 @@
 <link rel="stylesheet" href="{{ asset('css/attendance/detail.css') }}">
 @stop
 
-@section('header-nav')
-<ul class="nav-list">
-    <li class="nav-item"><a href="/attendance">勤怠</a></li>
-    <li class="nav-item"><a href="/attendance/list">勤怠一覧</a></li>
-    <li class="nav-item"><a href="/stamp_correction_request/list">申請</a></li>
-    <li class="nav-item">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button class="logout-btn">ログアウト</button>
-        </form>
-    </li>
-</ul>
-@endsection
 
 @section('content')
 <div class="attendance-detail-container">
     <h2 class="page-title">勤怠詳細</h2>
 
     @php
-        // 承認待ちの申請があるかチェック
-        $hasPendingRequest = $attendance->stampCorrectionRequests()
+        // 承認待ちの申請を取得
+        $pendingRequest = $attendance->stampCorrectionRequests()
             ->where('status', 0)
-            ->exists();
+            ->first();
+        
+        $hasPendingRequest = !is_null($pendingRequest);
     @endphp
 
     {{-- 成功メッセージ --}}
@@ -68,11 +57,11 @@
                 <div class="detail-label">出勤・退勤</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：テキスト表示のみ --}}
+                        {{-- 申請中：申請内容を表示 --}}
                         <div class="detail-value text-only">
-                            <span class="time-display">{{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '' }}</span>
+                            <span class="time-display">{{ $pendingRequest->start_time ? \Carbon\Carbon::parse($pendingRequest->start_time)->format('H:i') : '' }}</span>
                             <span class="separator">～</span>
-                            <span class="time-display">{{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '' }}</span>
+                            <span class="time-display">{{ $pendingRequest->end_time ? \Carbon\Carbon::parse($pendingRequest->end_time)->format('H:i') : '' }}</span>
                         </div>
                     @else
                         {{-- 申請前：入力フィールド --}}
@@ -96,16 +85,17 @@
             {{-- 休憩1 --}}
             @php
                 $rest1 = $attendance->restTimes->get(0);
+                $pendingRest1 = $hasPendingRequest && isset($pendingRequest->rest_times[0]) ? $pendingRequest->rest_times[0] : null;
             @endphp
             <div class="detail-row">
                 <div class="detail-label">休憩</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：テキスト表示のみ --}}
+                        {{-- 申請中：申請内容を表示 --}}
                         <div class="detail-value text-only">
-                            <span class="time-display">{{ $rest1 && $rest1->start_time ? \Carbon\Carbon::parse($rest1->start_time)->format('H:i') : '' }}</span>
+                            <span class="time-display">{{ $pendingRest1['start_time'] ?? '' }}</span>
                             <span class="separator">～</span>
-                            <span class="time-display">{{ $rest1 && $rest1->end_time ? \Carbon\Carbon::parse($rest1->end_time)->format('H:i') : '' }}</span>
+                            <span class="time-display">{{ $pendingRest1['end_time'] ?? '' }}</span>
                         </div>
                     @else
                         {{-- 申請前：入力フィールド --}}
@@ -129,17 +119,18 @@
             {{-- 休憩2 --}}
             @php
                 $rest2 = $attendance->restTimes->get(1);
+                $pendingRest2 = $hasPendingRequest && isset($pendingRequest->rest_times[1]) ? $pendingRequest->rest_times[1] : null;
             @endphp
             <div class="detail-row">
                 <div class="detail-label">休憩2</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：テキスト表示のみ --}}
+                        {{-- 申請中：申請内容を表示 --}}
                         <div class="detail-value text-only">
-                            @if($rest2 && $rest2->start_time && $rest2->end_time)
-                                <span class="time-display">{{ \Carbon\Carbon::parse($rest2->start_time)->format('H:i') }}</span>
+                            @if($pendingRest2)
+                                <span class="time-display">{{ $pendingRest2['start_time'] ?? '' }}</span>
                                 <span class="separator">～</span>
-                                <span class="time-display">{{ \Carbon\Carbon::parse($rest2->end_time)->format('H:i') }}</span>
+                                <span class="time-display">{{ $pendingRest2['end_time'] ?? '' }}</span>
                             @endif
                         </div>
                     @else
@@ -166,19 +157,14 @@
                 <div class="detail-label">備考</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：テキスト表示のみ --}}
+                        {{-- 申請中：申請内容を表示 --}}
                         <div class="detail-value text-only remarks-text">
-                            @php
-                                $pendingRequest = $attendance->stampCorrectionRequests()
-                                    ->where('status', 0)
-                                    ->first();
-                            @endphp
-                            {{ $pendingRequest ? $pendingRequest->remarks : '' }}
+                            {{ $pendingRequest->remarks }}
                         </div>
                     @else
                         {{-- 申請前：テキストエリア --}}
                         <textarea name="remarks" class="reason-textarea @error('remarks') is-invalid @enderror" 
-                                  placeholder="修正理由を入力してください">{{ old('remarks') }}</textarea>
+                                placeholder="修正理由を入力してください">{{ old('remarks') }}</textarea>
                         @error('remarks')
                             <p class="error-message">{{ $message }}</p>
                         @enderror

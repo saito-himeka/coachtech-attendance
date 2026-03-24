@@ -4,8 +4,8 @@
     min-height: calc(100vh - 70px);
 }
 
-.request-container {
-    max-width: 900px;
+.request-list-container {
+    max-width: 1000px;
     margin: 0 auto;
 }
 
@@ -28,50 +28,60 @@
 
 .tab-item {
     text-decoration: none;
-    color: #888;
-    font-weight: bold;
-    font-size: 15px;
-    padding-bottom: 10px;
-    transition: color 0.3s;
-}
-
-.tab-item.is-active {
-    color: #000;
-    /* アクティブなタブの下線を強調したい場合は border-bottom を追加可能 */
-}
-
-.tab-item:hover {
     color: #333;
+    font-size: 14px;
+    font-weight: bold;
+    padding-bottom: 10px;
+    position: relative;
 }
 
-/* テーブルスタイル */
-.request-table {
+.tab-item.active {
+    color: #000;
+}
+
+/* アクティブなタブの下線を太くする場合（お好みで） */
+.tab-item.active::after {
+    content: "";
+    position: absolute;
+    bottom: -1px;
+    left: 0;
     width: 100%;
-    border-collapse: collapse;
+    height: 2px;
+    background-color: #000;
+}
+
+/* テーブルデザイン */
+.table-wrapper {
     background-color: #fff;
     border-radius: 8px;
     overflow: hidden;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
 }
 
+.request-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
 .request-table th,
 .request-table td {
-    padding: 15px;
-    text-align: center;
+    padding: 18px 25px;
+    text-align: left;
     border-bottom: 1px solid #eee;
+    font-size: 14px;
 }
 
 .request-table th {
+    background-color: #fff;
     color: #888;
-    font-size: 13px;
-    font-weight: normal;
+    font-weight: bold;
 }
 
-.request-table td {
-    font-size: 14px;
-    font-weight: 500;
+.request-table tr:last-child td {
+    border-bottom: none;
 }
 
+/* 詳細リンク */
 .detail-link {
     color: #000;
     text-decoration: none;
@@ -80,4 +90,17 @@
 
 .detail-link:hover {
     text-decoration: underline;
+}
+
+.remarks-cell {
+    max-width: 300px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.no-data {
+    padding: 40px;
+    text-align: center;
+    color: #888;
 }

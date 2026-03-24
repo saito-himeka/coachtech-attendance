@@ -6,19 +6,6 @@
 <link rel="stylesheet" href="{{ asset('css/attendance/index.css') }}">
 @stop
 
-@section('header-nav')
-<ul class="nav-list">
-    <li class="nav-item"><a href="/attendance">勤怠</a></li>
-    <li class="nav-item"><a href="/attendance/list">勤怠一覧</a></li>
-    <li class="nav-item"><a href="/stamp_correction_request/list">申請</a></li>
-    <li class="nav-item">
-        <form action="{{ route('logout') }}" method="POST">
-            @csrf
-            <button class="logout-btn">ログアウト</button>
-        </form>
-    </li>
-</ul>
-@endsection
 
 @section('content')
 <div class="punch-container">

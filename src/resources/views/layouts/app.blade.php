@@ -12,9 +12,32 @@
         <header class="header">
             <div class="header__inner">
                 <a href="/" class="header__logo"><img src="{{ asset('img/logo.png') }}" alt="COACHTECH"></a>
-                {{-- ここにナビゲーションが入る --}}
+                
+                {{-- ナビゲーション --}}
                 <nav class="header__nav">
-                    @yield('header-nav')
+                    @auth
+                        <ul class="nav-list">
+                            @if(auth()->user()->role == 1)
+                                {{-- 管理者用ナビゲーション --}}
+                                <li class="nav-item"><a href="/admin/attendance/list">勤怠一覧</a></li>
+                                <li class="nav-item"><a href="/admin/staff/list">スタッフ一覧</a></li>
+                                <li class="nav-item"><a href="{{ route('admin.stamp_correction_request.list') }}">申請一覧</a></li>
+                            @else
+                                {{-- 一般ユーザー用ナビゲーション --}}
+                                <li class="nav-item"><a href="{{ route('attendance.index') }}">勤怠</a></li>
+                                <li class="nav-item"><a href="{{ route('attendance.list') }}">勤怠一覧</a></li>
+                                <li class="nav-item"><a href="{{ route('stamp_correction_request.list') }}">申請</a></li>
+                            @endif
+                            
+                            {{-- ログアウト（共通） --}}
+                            <li class="nav-item">
+                                <form action="{{ route('logout') }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    <button class="logout-btn">ログアウト</button>
+                                </form>
+                            </li>
+                        </ul>
+                    @endauth
                 </nav>
             </div>
         </header>

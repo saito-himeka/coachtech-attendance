@@ -13,15 +13,19 @@ class StampCorrectionRequestController extends Controller
     /**
      * PG06: 申請一覧（一般ユーザー）
      */
-    public function list()
+    public function list(Request $request)
     {
         $user = auth()->user();
         
+        // ステータスをクエリパラメータから取得（デフォルト: 0 = 承認待ち）
+        $status = $request->input('status', 0);
+        
         // 自分の申請一覧を取得
-        $requests = StampCorrectionRequest::with('attendance')
+        $requests = StampCorrectionRequest::with(['attendance.user'])
             ->whereHas('attendance', function($query) use ($user) {
                 $query->where('user_id', $user->id);
             })
+            ->where('status', $status)
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -54,7 +58,6 @@ class StampCorrectionRequestController extends Controller
         $restTimes = [];
         if ($request->has('rest_times')) {
             foreach ($request->rest_times as $rest) {
-                // 開始時刻か終了時刻のどちらかが入力されている場合のみ追加
                 if (!empty($rest['start_time']) || !empty($rest['end_time'])) {
                     $restTimes[] = [
                         'start_time' => $rest['start_time'] ?? null,
@@ -74,7 +77,6 @@ class StampCorrectionRequestController extends Controller
             'status' => 0, // 承認待ち
         ]);
         
-        // 同じ詳細画面にリダイレクト（読み取り専用で表示）
         return redirect()->route('attendance.detail', $attendance->id)
             ->with('success', '修正申請を送信しました。');
     }
@@ -82,10 +84,14 @@ class StampCorrectionRequestController extends Controller
     /**
      * PG12: 申請一覧（管理者用）
      */
-    public function adminList()
+    public function adminList(Request $request)
     {
+        // ステータスをクエリパラメータから取得（デフォルト: 0 = 承認待ち）
+        $status = $request->input('status', 0);
+        
         // 全ユーザーの申請一覧を取得
         $requests = StampCorrectionRequest::with(['attendance.user'])
+            ->where('status', $status)
             ->orderBy('created_at', 'desc')
             ->get();
         
@@ -111,28 +117,23 @@ class StampCorrectionRequestController extends Controller
         $correctionRequest = StampCorrectionRequest::with('attendance')
             ->findOrFail($id);
         
-        // 既に承認済みかチェック
         if ($correctionRequest->status == 1) {
             return redirect()->back()
                 ->with('error', '既に承認済みです。');
         }
         
-        // トランザクション開始
         \DB::beginTransaction();
         
         try {
             $attendance = $correctionRequest->attendance;
             
-            // 勤怠データを更新
             $attendance->update([
                 'start_time' => $correctionRequest->start_time,
                 'end_time' => $correctionRequest->end_time,
             ]);
             
-            // 既存の休憩時間を削除
             $attendance->restTimes()->delete();
             
-            // 新しい休憩時間を作成
             if (!empty($correctionRequest->rest_times)) {
                 foreach ($correctionRequest->rest_times as $rest) {
                     if (!empty($rest['start_time']) && !empty($rest['end_time'])) {
@@ -144,7 +145,6 @@ class StampCorrectionRequestController extends Controller
                 }
             }
             
-            // 申請のステータスを承認済みに更新
             $correctionRequest->update([
                 'status' => 1, // 承認済み
             ]);
