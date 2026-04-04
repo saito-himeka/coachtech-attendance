@@ -6,7 +6,6 @@
 <link rel="stylesheet" href="{{ asset('css/attendance/detail.css') }}">
 @stop
 
-
 @section('content')
 <div class="attendance-detail-container">
     <h2 class="page-title">勤怠詳細</h2>
@@ -17,7 +16,13 @@
             ->where('status', 0)
             ->first();
         
+        // 承認済みの申請を取得
+        $approvedRequest = $attendance->stampCorrectionRequests()
+            ->where('status', 1)
+            ->first();
+        
         $hasPendingRequest = !is_null($pendingRequest);
+        $hasApprovedRequest = !is_null($approvedRequest);
     @endphp
 
     {{-- 成功メッセージ --}}
@@ -57,14 +62,21 @@
                 <div class="detail-label">出勤・退勤</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：申請内容を表示 --}}
+                        {{-- 承認待ち：申請内容を表示 --}}
                         <div class="detail-value text-only">
                             <span class="time-display">{{ $pendingRequest->start_time ? \Carbon\Carbon::parse($pendingRequest->start_time)->format('H:i') : '' }}</span>
                             <span class="separator">～</span>
                             <span class="time-display">{{ $pendingRequest->end_time ? \Carbon\Carbon::parse($pendingRequest->end_time)->format('H:i') : '' }}</span>
                         </div>
+                    @elseif($hasApprovedRequest)
+                        {{-- 承認済み：承認された内容を表示（= 現在の勤怠データ） --}}
+                        <div class="detail-value text-only">
+                            <span class="time-display">{{ $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '' }}</span>
+                            <span class="separator">～</span>
+                            <span class="time-display">{{ $attendance->end_time ? \Carbon\Carbon::parse($attendance->end_time)->format('H:i') : '' }}</span>
+                        </div>
                     @else
-                        {{-- 申請前：入力フィールド --}}
+                        {{-- 申請なし：入力フィールド --}}
                         <div class="detail-value">
                             <input type="text" name="start_time" class="time-input @error('start_time') is-invalid @enderror" 
                                    value="{{ old('start_time', $attendance->start_time ? \Carbon\Carbon::parse($attendance->start_time)->format('H:i') : '') }}">
@@ -91,14 +103,21 @@
                 <div class="detail-label">休憩</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：申請内容を表示 --}}
+                        {{-- 承認待ち：申請内容を表示 --}}
                         <div class="detail-value text-only">
                             <span class="time-display">{{ $pendingRest1['start_time'] ?? '' }}</span>
                             <span class="separator">～</span>
                             <span class="time-display">{{ $pendingRest1['end_time'] ?? '' }}</span>
                         </div>
+                    @elseif($hasApprovedRequest)
+                        {{-- 承認済み：承認された内容を表示 --}}
+                        <div class="detail-value text-only">
+                            <span class="time-display">{{ $rest1 && $rest1->start_time ? \Carbon\Carbon::parse($rest1->start_time)->format('H:i') : '' }}</span>
+                            <span class="separator">～</span>
+                            <span class="time-display">{{ $rest1 && $rest1->end_time ? \Carbon\Carbon::parse($rest1->end_time)->format('H:i') : '' }}</span>
+                        </div>
                     @else
-                        {{-- 申請前：入力フィールド --}}
+                        {{-- 申請なし：入力フィールド --}}
                         <div class="detail-value">
                             <input type="text" name="rest_times[0][start_time]" class="time-input @error('rest_times.0.start_time') is-invalid @enderror" 
                                    value="{{ old('rest_times.0.start_time', $rest1 && $rest1->start_time ? \Carbon\Carbon::parse($rest1->start_time)->format('H:i') : '') }}">
@@ -125,7 +144,7 @@
                 <div class="detail-label">休憩2</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：申請内容を表示 --}}
+                        {{-- 承認待ち：申請内容を表示 --}}
                         <div class="detail-value text-only">
                             @if($pendingRest2)
                                 <span class="time-display">{{ $pendingRest2['start_time'] ?? '' }}</span>
@@ -133,8 +152,17 @@
                                 <span class="time-display">{{ $pendingRest2['end_time'] ?? '' }}</span>
                             @endif
                         </div>
+                    @elseif($hasApprovedRequest)
+                        {{-- 承認済み：承認された内容を表示 --}}
+                        <div class="detail-value text-only">
+                            @if($rest2)
+                                <span class="time-display">{{ $rest2 && $rest2->start_time ? \Carbon\Carbon::parse($rest2->start_time)->format('H:i') : '' }}</span>
+                                <span class="separator">～</span>
+                                <span class="time-display">{{ $rest2 && $rest2->end_time ? \Carbon\Carbon::parse($rest2->end_time)->format('H:i') : '' }}</span>
+                            @endif
+                        </div>
                     @else
-                        {{-- 申請前：入力フィールド --}}
+                        {{-- 申請なし：入力フィールド --}}
                         <div class="detail-value">
                             <input type="text" name="rest_times[1][start_time]" class="time-input @error('rest_times.1.start_time') is-invalid @enderror" 
                                    value="{{ old('rest_times.1.start_time', $rest2 && $rest2->start_time ? \Carbon\Carbon::parse($rest2->start_time)->format('H:i') : '') }}">
@@ -157,12 +185,17 @@
                 <div class="detail-label">備考</div>
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
-                        {{-- 申請中：申請内容を表示 --}}
+                        {{-- 承認待ち：申請内容を表示 --}}
                         <div class="detail-value text-only remarks-text">
                             {{ $pendingRequest->remarks }}
                         </div>
+                    @elseif($hasApprovedRequest)
+                        {{-- 承認済み：承認された備考を表示 --}}
+                        <div class="detail-value text-only remarks-text">
+                            {{ $approvedRequest->remarks }}
+                        </div>
                     @else
-                        {{-- 申請前：テキストエリア --}}
+                        {{-- 申請なし：テキストエリア --}}
                         <textarea name="remarks" class="reason-textarea @error('remarks') is-invalid @enderror" 
                                 placeholder="修正理由を入力してください">{{ old('remarks') }}</textarea>
                         @error('remarks')
@@ -175,10 +208,13 @@
 
         <div class="form-action">
             @if($hasPendingRequest)
-                {{-- 申請中の場合 --}}
+                {{-- 承認待ち --}}
                 <p class="pending-message">*承認待ちのため修正はできません。</p>
+            @elseif($hasApprovedRequest)
+                {{-- 承認済み --}}
+                <p class="approved-message">承認済み</p>
             @else
-                {{-- 申請がない場合は修正ボタン表示 --}}
+                {{-- 申請なし：修正ボタン表示 --}}
                 <button type="submit" class="update-btn">修正</button>
             @endif
         </div>

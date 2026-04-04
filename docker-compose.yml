@@ -35,6 +35,12 @@ services:
       - mysql-data:/var/lib/mysql
       - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
 
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025" # メール送信用のポート
+      - "8025:8025" # ブラウザ表示用のポート
+
   phpmyadmin:
     image: phpmyadmin/phpmyadmin
     environment:

@@ -189,3 +189,12 @@
     padding: 10px 30px;
     border-radius: 4px;
 }
+
+.approved-message {
+    background-color: #696969;
+    color: #fff;
+    padding: 8px 16px;
+    cursor: not-allowed;
+    border-radius: 4px;
+    font-weight: bold;
+}

@@ -1,0 +1,78 @@
+/* メインコンテンツの外枠：画面の真ん中に持ってくる */
+.varify-container {
+    text-align: center;
+    width: 100%;
+    max-width: 800px;
+    /* 少し広めに設定 */
+    margin: 150px auto;
+    /* 上下に余白を作り、左右中央に寄せる */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+/* 登録完了のメッセージ文 */
+.message {
+    font-weight: bold;
+    font-size: 18px;
+    line-height: 2.0;
+    /* 行間を少し広げて読みやすく */
+    margin-bottom: 50px;
+    color: #000;
+}
+
+/* ボタン（認証はメールから行うため、このボタンは装飾） */
+.btn-verify {
+    display: inline-block;
+    background-color: #d9d9d9;
+    color: #000;
+    text-decoration: none;
+    padding: 15px 60px;
+    /* 左右のパディングを広げて画像に合わせる */
+    border: 1px solid #999;
+    border-radius: 8px;
+    /* 角を少し丸める */
+    font-weight: bold;
+    font-size: 18px;
+    margin-bottom: 40px;
+    cursor: default;
+}
+
+/* ホバーした時に少し暗くして、ボタンらしさを出す */
+.btn-verify:hover {
+    background-color: #c0c0c0;
+    color: #000;
+}
+
+/* 再送リンクのブロック */
+.resend-block {
+    margin-top: 10px;
+}
+
+.btn-resend {
+    background: none;
+    border: none;
+    color: #3182ce;
+    text-decoration: none;
+    /* 画像に合わせて一旦アンダーラインを消す（お好みで） */
+    font-size: 14px;
+    cursor: pointer;
+    padding: 0;
+    transition: opacity 0.3s;
+}
+
+.btn-resend:hover {
+    opacity: 0.7;
+    text-decoration: underline;
+}
+
+/* 再送完了メッセージ */
+.status-message {
+    color: #2f855a;
+    font-size: 16px;
+    font-weight: bold;
+    margin-bottom: 30px;
+    background-color: #f0fff4;
+    /* 薄い緑の背景をつけて目立たせる */
+    padding: 10px;
+    border-radius: 5px;
+}
