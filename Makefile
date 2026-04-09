@@ -31,3 +31,6 @@ cache:
 
 stop:
 	docker-compose stop
+
+test:
+	docker-compose exec php php artisan test
