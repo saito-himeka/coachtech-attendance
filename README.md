@@ -21,8 +21,8 @@
 
 1. **リポジトリをクローン**
 ```bash
-git clone git@github.com:saito-himeka/coachtech-fleamarket.git
-cd coachtech-fleamarket
+git clone git@github.com:saito-himeka/coachtech-attendance.git
+cd coachtech-attendance
 ```
 
 2. **Dockerコンテナを起動**
