@@ -127,11 +127,13 @@ class StampCorrectionRequestController extends Controller
         try {
             $attendance = $correctionRequest->attendance;
             
+            // 1. 勤怠本体（出勤・退勤時刻）を申請内容で更新
             $attendance->update([
                 'start_time' => $correctionRequest->start_time,
                 'end_time' => $correctionRequest->end_time,
             ]);
             
+            // 2. 既存の休憩時間を削除して、申請された新しい内容に入れ替える
             $attendance->restTimes()->delete();
             
             if (!empty($correctionRequest->rest_times)) {
@@ -145,12 +147,14 @@ class StampCorrectionRequestController extends Controller
                 }
             }
             
+            // 3. 修正申請自体のステータスを「承認済み(1)」に更新
             $correctionRequest->update([
                 'status' => 1, // 承認済み
             ]);
             
             \DB::commit();
             
+            // 期待挙動：承認後に一覧画面へ戻る
             return redirect()->route('admin.stamp_correction_request.list')
                 ->with('success', '修正申請を承認しました。');
                 

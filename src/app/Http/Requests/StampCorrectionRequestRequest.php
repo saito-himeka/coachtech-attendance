@@ -86,7 +86,9 @@ class StampCorrectionRequestRequest extends FormRequest
 
             // 1. 出勤時間が退勤時間より後になっている場合、および退勤時間が出勤時間より前になっている場合
             if ($startTime && $endTime && $startTime >= $endTime) {
-                $validator->errors()->add('end_time', '出勤時間もしくは退勤時間が不適切な値です');
+                $message = '出勤時間が不適切な値です'; // テストケースの文言に合わせる
+                $validator->errors()->add('start_time', $message);
+                $validator->errors()->add('end_time', $message);
             }
 
             // 休憩時間のチェック
