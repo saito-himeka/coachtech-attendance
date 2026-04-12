@@ -119,12 +119,12 @@ class StampCorrectionRequestRequest extends FormRequest
 
                     // 2. 休憩開始時間が出勤時間より前になっている場合
                     if ($startTime && $rest['start_time'] < $startTime) {
-                        $validator->errors()->add("rest_times.{$index}.start_time", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("rest_times.{$index}.start_time", '休憩時間が不適切な値です');
                     }
 
                     // 2. 休憩開始時間が退勤時間より後になっている場合
                     if ($endTime && $rest['start_time'] >= $endTime) {
-                        $validator->errors()->add("rest_times.{$index}.start_time", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("rest_times.{$index}.start_time", '休憩時間が不適切な値です');
                     }
 
                     // 3. 休憩終了時間が退勤時間より後になっている場合

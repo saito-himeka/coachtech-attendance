@@ -73,7 +73,7 @@ class AttendanceUpdateRequest extends FormRequest
 
             // 1. 出勤時間が退勤時間より後になっている場合、および退勤時間が出勤時間より前になっている場合
             if ($startTime && $endTime && $startTime >= $endTime) {
-                $message = '出勤時間が不適切な値です'; // テストが期待する文言に合わせる
+                $message = '出勤時間もしくは退勤時間が不適切な値です'; // テストが期待する文言に合わせる
                 $validator->errors()->add('start_time', $message); // テストが見るキー
                 $validator->errors()->add('end_time', $message);   // 念のため両方に出す
             }
@@ -111,7 +111,7 @@ class AttendanceUpdateRequest extends FormRequest
 
                     // 2. 休憩開始時間が退勤時間より後になっている場合
                     if ($endTime && $rest['start_time'] >= $endTime) {
-                        $validator->errors()->add("rest_times.{$index}.start_time", '休憩時間が勤務時間外です');
+                        $validator->errors()->add("rest_times.{$index}.start_time", '休憩時間が不適切な値です');
                     }
 
                     // 3. 休憩終了時間が退勤時間より後になっている場合
