@@ -88,10 +88,11 @@ make test
 
 ## テーブル仕様書
 
-| Command | Description |
-| --- | --- |
-| git status | List all new or modified files |
-| git diff | Show file differences that haven't been staged |
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| name | verchar(255) ||| ○ ||
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
 
 erDiagram
     users ||--o{ attendances : "1対多"
