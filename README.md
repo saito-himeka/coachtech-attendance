@@ -77,7 +77,6 @@ make test
 - **email**:suzuki@example.com
 - **password**:password123
 
-```
 
 ## URL
 - 開発環境:http://localhost
@@ -86,6 +85,55 @@ make test
 - phpMyAdmin:http://localhost:8080
     - ユーザー名:laravel_user
     - パスワード:laravel_pass
+
+## テーブル仕様書
+erDiagram
+    users ||--o{ attendances : "1対多"
+    attendances ||--o{ rest_times : "1対多"
+    attendances ||--o{ stamp_correction_requests : "1対多"
+
+    users {
+        unsigned_bigint id PK
+        varchar_255 name "NOT NULL"
+        varchar email UK "NOT NULL"
+        varchar password "NOT NULL"
+        tinyint role "NOT NULL"
+        timestamp email_verified_at
+        varchar remember_token
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    attendances {
+        unsigned_bigint id PK
+        unsigned_bigint user_id FK "NOT NULL"
+        date date "NOT NULL"
+        time start_time "NOT NULL"
+        time end_time
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    rest_times {
+        unsigned_bigint id PK
+        unsigned_bigint attendance_id FK "NOT NULL"
+        time start_time "NOT NULL"
+        time end_time
+        timestamp created_at
+        timestamp updated_at
+    }
+
+    stamp_correction_requests {
+        unsigned_bigint id PK
+        unsigned_bigint attendance_id FK "NOT NULL"
+        time start_time
+        time end_time
+        json rest_times
+        text remarks "NOT NULL"
+        tinyint status "NOT NULL"
+        timestamp created_at
+        timestamp updated_at
+    }
 
 ## ER図
 
