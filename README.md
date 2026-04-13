@@ -64,20 +64,21 @@ MAIL_FROM_ADDRESS="hello@example.com"
 
 ## テストアカウント
 
-###管理者
+### 管理者
 - **name**:管理者
 - **email**:admin@example.com
 - **password**:password123
 
-###一般ユーザー
+### 一般ユーザー
+#### ユーザー1
 - **name**:山田太郎
 - **email**:yamada@example.com
 - **password**:password123
-
+#### ユーザー2
 - **name**:佐藤花子
 - **email**:sato@example.com
 - **password**:password123
-
+#### ユーザー3
 - **name**:鈴木一郎
 - **email**:suzuki@example.com
 - **password**:password123
