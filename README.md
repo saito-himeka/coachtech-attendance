@@ -87,6 +87,12 @@ make test
     - パスワード:laravel_pass
 
 ## テーブル仕様書
+
+| Command | Description |
+| --- | --- |
+| git status | List all new or modified files |
+| git diff | Show file differences that haven't been staged |
+
 erDiagram
     users ||--o{ attendances : "1対多"
     attendances ||--o{ rest_times : "1対多"
