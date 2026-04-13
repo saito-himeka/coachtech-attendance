@@ -16,18 +16,6 @@
 - **ユーザー管理**: スタッフ一覧の確認、スタッフ別勤怠の表示
 - **承認フロー**: ユーザーからの修正申請に対する承認処理
 
-```text
-- 会員登録・ログイン機能（メール認証付き）
-- 日時・月情報取得機能
-- ステータス確認機能
-- 出勤機能・休憩機能・退勤機能
-- 勤怠一覧情報取得機能
-- 詳細遷移機能
-- 修正申請機能
-- 承認機能
-- CSV出力機能
-```
-
 ---
 
 ## 環境構築手順
@@ -62,7 +50,7 @@ make test
 
 ## メール認証の設定 (Mailhog)
 ローカルでのメール送信テストには Mailhog を使用しています。
-`.env` ファイルの以下の項目に、ご自身の Mailtrap 認証情報を設定してください。
+`.env` ファイルの以下の項目に、ご自身の Mailhog 認証情報を設定してください。
 
 ```text
 MAIL_MAILER=smtp
@@ -76,23 +64,23 @@ MAIL_FROM_ADDRESS="hello@example.com"
 
 ## テストアカウント
 
-####管理者
-name:管理者
-email:admin@example.com
-password:password123
+###管理者
+- **name**:管理者
+- **email**:admin@example.com
+- **password**:password123
 
-####一般ユーザー
-name:山田太郎
-email:yamada@example.com
-password:password123
+###一般ユーザー
+- **name**:山田太郎
+- **email**:yamada@example.com
+- **password**:password123
 
-name:佐藤花子
-email:sato@example.com
-password:password123
+- **name**:佐藤花子
+- **email**:sato@example.com
+- **password**:password123
 
-name:鈴木一郎
-email:suzuki@example.com
-password:password123
+- **name**:鈴木一郎
+- **email**:suzuki@example.com
+- **password**:password123
 
 ```
 
