@@ -1,7 +1,7 @@
 # coachtech-attendance
 
 ## アプリケーション概要
-- Laravel 8 を使用したフリーマーケットアプリケーションです。
+- Laravel 8 を使用した勤怠管理アプリです。
 - Dockerで開発環境を構築可能。
 ```text
 - 会員登録・ログイン機能（メール認証付き）
@@ -46,7 +46,6 @@ php artisan test
 - **Frontend**: Blade, CSS, JavaScript
 - **Database**: MySQL 8.0.26
 - **Infrastructure**: Docker, Nginx 1.21.1
-- **External API**: Stripe (決済処理)
 
 ## メール認証の設定 (Mailtrap)
 ローカルでのメール送信テストには Mailtrap を使用しています。
