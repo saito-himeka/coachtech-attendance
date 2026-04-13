@@ -1,8 +1,21 @@
 # coachtech-attendance
 
 ## アプリケーション概要
-- Laravel 8 を使用した勤怠管理アプリです。
+- Laravel 8 を使用した勤怠管理アプリケーションです。
 - Dockerで開発環境を構築可能。
+
+### 主な機能
+#### 一般ユーザー
+- **認証**: 会員登録（Mailtrapによるメール認証）、ログイン
+- **打刻**: 出勤、退勤、休憩開始、休憩終了
+- **一覧表示**: 自身の月次勤怠一覧の確認
+- **申請**: 勤怠データの修正申請機能（管理者への申請）
+
+#### 管理者
+- **勤怠管理**: 全スタッフの日次勤怠一覧・詳細の確認、CSV出力
+- **ユーザー管理**: スタッフ一覧の確認、スタッフ別勤怠の表示
+- **承認フロー**: ユーザーからの修正申請に対する承認処理
+
 ```text
 - 会員登録・ログイン機能（メール認証付き）
 - 日時・月情報取得機能
@@ -38,7 +51,7 @@ make init
 
 ## PHPUnitを利用したテスト
 ```bash
-php artisan test
+make test
 ```
 
 ## 使用技術/バージョン
@@ -47,8 +60,8 @@ php artisan test
 - **Database**: MySQL 8.0.26
 - **Infrastructure**: Docker, Nginx 1.21.1
 
-## メール認証の設定 (Mailtrap)
-ローカルでのメール送信テストには Mailtrap を使用しています。
+## メール認証の設定 (Mailhog)
+ローカルでのメール送信テストには Mailhog を使用しています。
 `.env` ファイルの以下の項目に、ご自身の Mailtrap 認証情報を設定してください。
 
 ```text
@@ -62,16 +75,25 @@ MAIL_FROM_ADDRESS="hello@example.com"
 ```
 
 ## テストアカウント
+
+####管理者
 name:管理者
 email:admin@example.com
 password:password123
 
+####一般ユーザー
 name:山田太郎
 email:yamada@example.com
 password:password123
-```text
-STRIPE_PUBLIC_KEY=pk_test_...
-STRIPE_SECRET=sk_test_...
+
+name:佐藤花子
+email:sato@example.com
+password:password123
+
+name:鈴木一郎
+email:suzuki@example.com
+password:password123
+
 ```
 
 ## URL
