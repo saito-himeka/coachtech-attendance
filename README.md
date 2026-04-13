@@ -47,20 +47,14 @@ make test
 - **Frontend**: Blade, CSS, JavaScript
 - **Database**: MySQL 8.0.26
 - **Infrastructure**: Docker, Nginx 1.21.1
+- **Tool**: MailHog（メールテスト用）
 
-## メール認証の設定 (Mailhog)
-ローカルでのメール送信テストには Mailhog を使用しています。
-`.env` ファイルの以下の項目に、ご自身の Mailhog 認証情報を設定してください。
+## メール認証の設定 (MailHog)
+ローカルでのメール送信テストには MailHog を使用しています。
+ブラウザで以下のURLにアクセスすることで、送信されたメールの内容をリアルタイムで確認できます。
+- **MailHog管理画面**: http://localhost:8025
+※ .env の MAIL_HOST には mailhog を設定してください。
 
-```text
-MAIL_MAILER=smtp
-MAIL_HOST=sandbox.smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=（ユーザー名）
-MAIL_PASSWORD=（パスワード）
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS="hello@example.com"
-```
 
 ## テストアカウント
 
@@ -88,6 +82,7 @@ MAIL_FROM_ADDRESS="hello@example.com"
 ## URL
 - 開発環境:http://localhost
 - ユーザー登録:http://localhost/register
+- MailHog (メール確認): http://localhost:8025
 - phpMyAdmin:http://localhost:8080
     - ユーザー名:laravel_user
     - パスワード:laravel_pass
