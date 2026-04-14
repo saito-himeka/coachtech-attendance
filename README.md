@@ -1,19 +1,20 @@
 # coachtech-attendance
 
 ## アプリケーション概要
-- Laravel 8 を使用した勤怠管理アプリです。
+- Laravel 8 を使用した勤怠管理アプリケーションです。
 - Dockerで開発環境を構築可能。
-```text
-- 会員登録・ログイン機能（メール認証付き）
-- 日時・月情報取得機能
-- ステータス確認機能
-- 出勤機能・休憩機能・退勤機能
-- 勤怠一覧情報取得機能
-- 詳細遷移機能
-- 修正申請機能
-- 承認機能
-- CSV出力機能
-```
+
+### 主な機能
+#### 一般ユーザー
+- **認証**: 会員登録（Mailtrapによるメール認証）、ログイン
+- **打刻**: 出勤、退勤、休憩開始、休憩終了
+- **一覧表示**: 自身の月次勤怠一覧の確認
+- **申請**: 勤怠データの修正申請機能（管理者への申請）
+
+#### 管理者
+- **勤怠管理**: 全スタッフの日次勤怠一覧・詳細の確認、CSV出力
+- **ユーザー管理**: スタッフ一覧の確認、スタッフ別勤怠の表示
+- **承認フロー**: ユーザーからの修正申請に対する承認処理
 
 ---
 
@@ -38,7 +39,7 @@ make init
 
 ## PHPUnitを利用したテスト
 ```bash
-php artisan test
+make test
 ```
 
 ## 使用技術/バージョン
@@ -46,40 +47,92 @@ php artisan test
 - **Frontend**: Blade, CSS, JavaScript
 - **Database**: MySQL 8.0.26
 - **Infrastructure**: Docker, Nginx 1.21.1
+- **Tool**: MailHog（メールテスト用）
 
-## メール認証の設定 (Mailtrap)
-ローカルでのメール送信テストには Mailtrap を使用しています。
-`.env` ファイルの以下の項目に、ご自身の Mailtrap 認証情報を設定してください。
+## メール認証の設定 (MailHog)
+ローカルでのメール送信テストには MailHog を使用しています。
+ブラウザで以下のURLにアクセスすることで、送信されたメールの内容をリアルタイムで確認できます。
+- **MailHog管理画面**: http://localhost:8025
+※ .env の MAIL_HOST には mailhog を設定してください。
 
-```text
-MAIL_MAILER=smtp
-MAIL_HOST=sandbox.smtp.mailtrap.io
-MAIL_PORT=2525
-MAIL_USERNAME=（ユーザー名）
-MAIL_PASSWORD=（パスワード）
-MAIL_ENCRYPTION=tls
-MAIL_FROM_ADDRESS="hello@example.com"
-```
 
 ## テストアカウント
-name:管理者
-email:admin@example.com
-password:password123
 
-name:山田太郎
-email:yamada@example.com
-password:password123
-```text
-STRIPE_PUBLIC_KEY=pk_test_...
-STRIPE_SECRET=sk_test_...
-```
+### 管理者
+- **name**:管理者
+- **email**:admin@example.com
+- **password**:password123
+
+### 一般ユーザー
+#### ユーザー1
+- **name**:山田太郎
+- **email**:yamada@example.com
+- **password**:password123
+#### ユーザー2
+- **name**:佐藤花子
+- **email**:sato@example.com
+- **password**:password123
+#### ユーザー3
+- **name**:鈴木一郎
+- **email**:suzuki@example.com
+- **password**:password123
+
 
 ## URL
 - 開発環境:http://localhost
 - ユーザー登録:http://localhost/register
+- MailHog (メール確認): http://localhost:8025
 - phpMyAdmin:http://localhost:8080
     - ユーザー名:laravel_user
     - パスワード:laravel_pass
+
+## テーブル仕様書
+### usersテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| name | verchar(255) |  |  | ○ |  |
+| email | verchar(255) |  | ○ | ○ |  |
+| password | verchar(255) |  |  | ○ |  |
+| role | tinyint |  |  | ○ |  |
+| email_verified | timestamp |  |  |  |  |
+| remember_token | verchar(255) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### attendancesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| user_id | unsigned bigint |  | ○ | ○ | users(id) |
+| date | date |  | ○ | ○ |  |
+| start_time | time |  |  | ○ |  |
+| end_time | time |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### rest_timesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| attendance_id | unsigned bigint |  |  | ○ | attendances(id) |
+| start_time | time |  |  | ○ |  |
+| end_time | time |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
+
+### stamp_correction_requestsテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| attendance_id | unsigned bigint |  |  | ○ | attendances(id) |
+| start_time | time |  |  |  |  |
+| end_time | time |  |  |  |  |
+| rest_times | json |  |  |  |  |
+| remarks | text |  |  | ○ |  |
+| status | tinyint |  |  | ○ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
 
 ## ER図
 
