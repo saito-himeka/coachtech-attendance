@@ -87,11 +87,11 @@ make test
     - パスワード:laravel_pass
 
 ## テーブル仕様書
-
+### usersテーブル
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
 | id | unsigned bigint | ○ | | ○ | |
-| name | verchar(255) ||| ○ ||
+| name | verchar(255) |  |  | ○ |  |
 | email | verchar(255) |  | ○ | ○ |  |
 | password | verchar(255) |  |  | ○ |  |
 | role | tinyint |  |  | ○ |  |
@@ -100,53 +100,39 @@ make test
 | created_at | timestamp |  |  |  |  |
 | updated_at | timestamp |  |  |  |  |
 
-erDiagram
-    users ||--o{ attendances : "1対多"
-    attendances ||--o{ rest_times : "1対多"
-    attendances ||--o{ stamp_correction_requests : "1対多"
+### attendancesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| user_id | unsigned bigint |  | ○ | ○ | users(id) |
+| date | date |  | ○ | ○ |  |
+| start_time | time |  |  | ○ |  |
+| end_time | time |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
 
-    users {
-        unsigned_bigint id PK
-        varchar_255 name "NOT NULL"
-        varchar email UK "NOT NULL"
-        varchar password "NOT NULL"
-        tinyint role "NOT NULL"
-        timestamp email_verified_at
-        varchar remember_token
-        timestamp created_at
-        timestamp updated_at
-    }
+### rest_timesテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| attendance_id | unsigned bigint |  |  | ○ | attendances(id) |
+| start_time | time |  |  | ○ |  |
+| end_time | time |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
 
-    attendances {
-        unsigned_bigint id PK
-        unsigned_bigint user_id FK "NOT NULL"
-        date date "NOT NULL"
-        time start_time "NOT NULL"
-        time end_time
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    rest_times {
-        unsigned_bigint id PK
-        unsigned_bigint attendance_id FK "NOT NULL"
-        time start_time "NOT NULL"
-        time end_time
-        timestamp created_at
-        timestamp updated_at
-    }
-
-    stamp_correction_requests {
-        unsigned_bigint id PK
-        unsigned_bigint attendance_id FK "NOT NULL"
-        time start_time
-        time end_time
-        json rest_times
-        text remarks "NOT NULL"
-        tinyint status "NOT NULL"
-        timestamp created_at
-        timestamp updated_at
-    }
+### stamp_correction_requestsテーブル
+| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| --- | --- | --- | --- | --- | --- |
+| id | unsigned bigint | ○ | | ○ | |
+| attendance_id | unsigned bigint |  |  | ○ | attendances(id) |
+| start_time | time |  |  |  |  |
+| end_time | time |  |  |  |  |
+| rest_times | json |  |  |  |  |
+| remarks | text |  |  | ○ |  |
+| status | tinyint |  |  | ○ |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
 
 ## ER図
 
