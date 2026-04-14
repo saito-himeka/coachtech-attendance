@@ -92,7 +92,13 @@ make test
 | --- | --- | --- | --- | --- | --- |
 | id | unsigned bigint | ○ | | ○ | |
 | name | verchar(255) ||| ○ ||
-| カラム名 | 型 | primary key | unique key | not null | foreign key |
+| email | verchar(255) |  | ○ | ○ |  |
+| password | verchar(255) |  |  | ○ |  |
+| role | tinyint |  |  | ○ |  |
+| email_verified | timestamp |  |  |  |  |
+| remember_token | verchar(255) |  |  |  |  |
+| created_at | timestamp |  |  |  |  |
+| updated_at | timestamp |  |  |  |  |
 
 erDiagram
     users ||--o{ attendances : "1対多"
