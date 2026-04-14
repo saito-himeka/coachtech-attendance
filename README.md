@@ -39,7 +39,7 @@ make init
 
 ## PHPUnitを利用したテスト
 ```bash
-make test
+php artisan test
 ```
 
 ## 使用技術/バージョン
@@ -91,12 +91,12 @@ make test
 | カラム名 | 型 | primary key | unique key | not null | foreign key |
 | --- | --- | --- | --- | --- | --- |
 | id | unsigned bigint | ○ | | ○ | |
-| name | verchar(255) |  |  | ○ |  |
-| email | verchar(255) |  | ○ | ○ |  |
-| password | verchar(255) |  |  | ○ |  |
+| name | varchar(255) |  |  | ○ |  |
+| email | varchar(255) |  | ○ | ○ |  |
+| password | varchar(255) |  |  | ○ |  |
 | role | tinyint |  |  | ○ |  |
-| email_verified | timestamp |  |  |  |  |
-| remember_token | verchar(255) |  |  |  |  |
+| email_verified_at | timestamp |  |  |  |  |
+| remember_token | varchar(255) |  |  |  |  |
 | created_at | timestamp |  |  |  |  |
 | updated_at | timestamp |  |  |  |  |
 
