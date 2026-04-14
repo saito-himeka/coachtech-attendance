@@ -96,7 +96,12 @@
     word-break: break-word;
     line-height: 1.6;
     display: block;
+    text-align: left;
+    padding-left: 20px;
+    font-weight: bold;
 }
+
+
 
 .date-name {
     padding: 0 0 0 18px;

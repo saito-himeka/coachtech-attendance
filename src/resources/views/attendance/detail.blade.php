@@ -186,12 +186,12 @@
                 <div class="detail-value-wrapper">
                     @if($hasPendingRequest)
                         {{-- 承認待ち：申請内容を表示 --}}
-                        <div class="detail-value text-only remarks-text">
+                        <div class="remarks-text">
                             {{ $pendingRequest->remarks }}
                         </div>
                     @elseif($hasApprovedRequest)
                         {{-- 承認済み：承認された備考を表示 --}}
-                        <div class="detail-value text-only remarks-text">
+                        <div class="remarks-text">
                             {{ $approvedRequest->remarks }}
                         </div>
                     @else
